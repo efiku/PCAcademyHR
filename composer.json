@@ -1,0 +1,15 @@
+{
+    "name": "efik/PCAcademyHR  ",
+    "description": "Solution of qualifying task .",
+    "minimum-stability": "stable",
+    "license": "GNU GPL v2",
+    "authors": [
+        {
+            "name": "Krzysztof Pazdur",
+            "email": "pazdurk@gmail.com"
+        }
+    ],
+    "require": {
+        "twig/twig": "1.6.5"
+    }
+}
