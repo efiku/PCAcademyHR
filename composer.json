@@ -1,8 +1,8 @@
 {
-    "name": "efik/PCAcademyHR  ",
-    "description": "Solution of qualifying task .",
+    "name": "efik/PCAcademyHR",
+    "description": "Solution of qualifying task.",
     "minimum-stability": "stable",
-    "license": "GNU GPL v2",
+    "license": "GPL-2.0",
     "authors": [
         {
             "name": "Krzysztof Pazdur",
