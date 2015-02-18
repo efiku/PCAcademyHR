@@ -15,7 +15,7 @@ ____
 
 2. **Replace fileds**
    
-  Please fill fields in **config.php** with your: database name, host, login and passord 
+  Please fill fields in **config.php** with your: database name, host, login and password 
      
   ```php
   $config = Array(
