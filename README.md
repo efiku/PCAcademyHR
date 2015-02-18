@@ -1,3 +1,5 @@
+Work in progress... :D 
+
 #Counter
 ###What it 'Counter'? 
 "Counter" is this a simple class where are stored my solutions about tasks what I received.  It's something like qualifying test, which is necessary to pass next step :D
