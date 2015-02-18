@@ -41,7 +41,6 @@ class Counter
 
         try{
             $this->DBH =  new PDO($dsn, $user, $password);
-            unset($ConfigArray);
         }
         catch(PDOException $e)
         {
