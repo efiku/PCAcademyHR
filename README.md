@@ -9,7 +9,7 @@ ____
   ```sh
   php composer.phar install
   ```
-  Composer should download twing framewoork ( for templates ) 
+  Composer should download twig framewoork ( for templates ) 
 
 2. **Replace fileds**
    
