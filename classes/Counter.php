@@ -12,13 +12,13 @@ class Counter
 {
 
     /**
-     * @var PDO
-     */
-    public $DBH;
-    /**
      * @var
      */
     private static $instance;
+    /**
+     * @var PDO
+     */
+    public $DBH;
 
     /**
      * @param $ConfigArray
@@ -62,38 +62,6 @@ class Counter
         return self::$instance;
     }
 
-
-    /**
-     * @param $sql
-     * @return array
-     */
-    public function fetchDbData($sql)
-    {
-        $temp_res = array();
-        $stm = $this->DBH->query($sql);
-
-        if($stm == FALSE) { die("FALSE"); exit; }
-        while ($row = $stm->fetch()) {
-            $temp_res[$row['DATE']] = $row['READ'];
-        }
-        return $temp_res;
-    }
-
-
-    /**
-     * @param $data
-     * @return bool
-     */
-    public function chceckOneBeforeData($data)
-    {
-        $sql = "SELECT `DATE`, `READ` FROM ELECTRICITY_METER_READS WHERE `DATE` <= '$data'";
-
-        $fdata[] = $this->fetchDbData($sql);
-        $keys = count($fdata);
-        return ($keys > 0 ? $fdata[$keys-1] : FALSE );
-    }
-
-
     /**
      * @param $start
      * @param $end
@@ -102,19 +70,59 @@ class Counter
     public function getDataBetween($start, $end)
     {
         $sql    = "SELECT `DATE`, `READ`  FROM ELECTRICITY_METER_READS WHERE ( `DATE` BETWEEN '$start' AND '$end')";
-        $sql2   = "SELECT `DATE`, `READ`  FROM ELECTRICITY_METER_READS WHERE ( `DATE` == '$start'";
+        $sql2   = "SELECT `DATE`, `READ`  FROM ELECTRICITY_METER_READS WHERE ( `DATE` = '$start' )";
 
-        if($this->DBH->exec($sql2) == FALSE) {
-            $tab_a = $this->chceckOneBeforeData($start);
-            $tab_b = $this->fetchDbData($sql);
-            return array_merge($tab_a,$tab_b);
+
+        if($db =  $this->DBH->query($sql2))
+        {
+            if ($db->fetchColumn() == 0) {
+
+                $tab_a = $this->chceckOneBeforeData($start);
+                $tab_b = $this->fetchDbData($sql);
+                return array_merge($tab_a,$tab_b);
+            }
+            else{
+                return $this->fetchDbData($sql);
+            }
         }
-        else{
-            return $this->fetchDbData($sql);
+        return false;
+
+
+
+
+    }
+
+    /**
+     * @param $data
+     * @return bool
+     */
+    public function chceckOneBeforeData($data)
+    {
+        $sql = "SELECT `DATE`, `READ`
+                FROM ELECTRICITY_METER_READS
+                WHERE (`DATE` < '$data')
+                ORDER BY `DATE` DESC
+                LIMIT 1";
+
+
+        $fetchedData = $this->fetchDbData($sql);
+
+        $keys = count($fetchedData);
+        return ($keys > 0 ? $fetchedData : FALSE );
+    }
+
+    public function fetchDbData($sql)
+    {
+        $temp_res = array();
+        $stm = $this->DBH->query($sql);
+
+        if($stm == FALSE) { die("Error while fetching data");  }
+        while ($row = $stm->fetch()) {
+
+                $temp_res[$row['DATE']] = $row['READ'];
+
         }
-
-
-
+        return $temp_res;
     }
 
 
