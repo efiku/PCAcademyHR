@@ -77,7 +77,7 @@ class Counter
         {
             if ($db->fetchColumn() == 0) {
 
-                $tab_a = $this->chceckOneBeforeData($start);
+                $tab_a = $this->checkOneBeforeData($start);
                 $tab_b = $this->fetchDbData($sql);
                 return array_merge($tab_a,$tab_b);
             }
@@ -94,15 +94,15 @@ class Counter
 
     /**
      * @param $data
-     * @return bool
+     * @return bool or Array
      */
-    public function chceckOneBeforeData($data)
+    public function checkOneBeforeData($data)
     {
-        $sql = "SELECT `DATE`, `READ`
-                FROM ELECTRICITY_METER_READS
-                WHERE (`DATE` < '$data')
-                ORDER BY `DATE` DESC
-                LIMIT 1";
+        $sql = 'SELECT `DATE`,`READ` ' .
+            'FROM ELECTRICITY_METER_READS ' .
+            "WHERE (`DATE` < '$data') " .
+            'ORDER BY `DATE` DESC ' .
+            'LIMIT 1';
 
 
         $fetchedData = $this->fetchDbData($sql);
@@ -116,8 +116,10 @@ class Counter
         $temp_res = array();
         $stm = $this->DBH->query($sql);
 
-        if($stm == FALSE) { die("Error while fetching data");  }
-        while ($row = $stm->fetch()) {
+        if ($stm == FALSE) {
+            die("You have an error in your SQL syntax:\n" . $sql);
+        }
+        while ($row = $stm->fetch(PDO::FETCH_ASSOC)) {
 
                 $temp_res[$row['DATE']] = $row['READ'];
 
