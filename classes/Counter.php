@@ -1,6 +1,8 @@
 <?php
 
 namespace PCAcademyHR;
+
+use DateTime;
 use PDO;
 use PDOException;
 
@@ -120,10 +122,57 @@ class Counter
         }
         while ($row = $stm->fetch(PDO::FETCH_ASSOC)) {
 
-                $temp_res[$row['DATE']] = $row['READ'];
+            $temp_res[$row['DATE']] = $row['READ'];
 
         }
         return $temp_res;
+    }
+
+    public function getbet($dd, $wytnij_od, $wytnij_do)
+    {
+        // tablica z poprzedniej funkcji
+        $tablica_z_poprzedniej_funkcji = $dd;
+
+        // zliczam ilosc wszystkich elementow
+        $ilosc_wszystkich_el = count($tablica_z_poprzedniej_funkcji);
+
+
+        // Tworze gotowa tablice
+        $pokolei = array();
+
+        $pobierz_klucze = (array_keys($tablica_z_poprzedniej_funkcji));
+
+        sort($pobierz_klucze);
+
+        $liczba_dni_z_przedzialu = 0;
+        $srednia_energia_z_przedzialu = 0;
+
+
+        for ($i = 0; $i < $ilosc_wszystkich_el - 1; $i++) {
+            $tymczasowy_dzien = new DateTime();
+
+            $data_prz_1 = new DateTime($pobierz_klucze[$i]);
+            $data_prz_2 = new DateTime($pobierz_klucze[($i + 1)]);
+            $tymczasowy_dzien = $data_prz_1;
+
+            $liczba_dni_z_przedzialu = $data_prz_1->diff($data_prz_2)->days;
+
+
+            $zmiana_licznika = $tablica_z_poprzedniej_funkcji[$pobierz_klucze[$i + 1]] - $tablica_z_poprzedniej_funkcji[$pobierz_klucze[$i]];
+
+
+            $srednia_energia_z_przedzialu = (($zmiana_licznika) / $liczba_dni_z_przedzialu);
+
+
+            for ($k = 0; $k <= $liczba_dni_z_przedzialu; $k++) {
+                $pokolei[$tymczasowy_dzien->format("y-m-d")] = round($srednia_energia_z_przedzialu, 2);
+                $tymczasowy_dzien->add(new \DateInterval('P1D'));
+            }
+
+        }
+
+
+        return $pokolei;
     }
 
 
