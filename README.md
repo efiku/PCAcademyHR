@@ -9,7 +9,7 @@ ____
 
   Instal composer after cloning this repository.
   ```sh
-  php composer.phar install
+  php composer.phar update
   ```
   Composer should download twig framewoork ( for templates ) 
 
