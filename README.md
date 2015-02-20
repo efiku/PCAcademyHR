@@ -28,4 +28,8 @@ ____
     'PORT'   => '3306',
      );
   ```
-3. You should see nice page ;-)
+  
+3. **Import Table to database from counters.sql file**
+4. **You should see nice page**  
+
+:-)
