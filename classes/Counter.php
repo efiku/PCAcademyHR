@@ -185,7 +185,7 @@ class Counter
      * @param array $cut_between_date
      * @return array
      */
-    public function getAverageScores(&$DATA = array(), $cut_between_date = array())
+    public function getAverageScores(&$DATA = array(), &$cut_between_date = array())
     {
         /*
          *  This variable is returned when loop "for" is done.
@@ -251,7 +251,7 @@ class Counter
             {
                 // fill $result_array with  received data
                 // clever line of code!
-                $result_array[$temp_day->format("y-m-d")] = round($average_energy_f_range, 2);
+                $result_array[$temp_day->format("Y-m-d")] = round($average_energy_f_range, 2);
                 $temp_day->add(new DateInterval('P1D'));
 
 
@@ -273,10 +273,11 @@ class Counter
 
             $current_data = new DateTime($array_of_keys[$loop]);
 
-            if( $current_data >= $data_between_start && $current_data <= $data_between_end )
+            if( $current_data >= $data_between_start &&  $current_data <= $data_between_end )
             {
                 $new_result_array[$array_of_keys[$loop]] =  $result_array[ $array_of_keys[$loop]];
             }
+
 
 
 

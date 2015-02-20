@@ -1,5 +1,45 @@
 </div>
 
+<script type="text/javascript">
+    $(function () {
+        //Better to construct options first and then pass it as a parameter
+        var options = {
+            title: {
+                text: "WYKRES ŚREDNIEGO DZIENNEGO ZUŻYCIA PRĄDU W DANYM PRZEDZIALE "
+            },
+            axisX: {
+                title:"Od: {{ PA }}"
+            },
+            axisY:{
+                title:"Średni dzienny pobór mocy",
+                includeZero: false,
+                interval: 0.5,
+
+                interlacedColor: "#F5F5F5",
+                gridColor: "#D7D7D7",
+                tickColor: "#D7D7D7",
+            },
+            animationEnabled: true,
+
+            data: [
+                {
+                    type: "line",
+
+                    dataPoints: [
+
+                        {{ DATA_POINTS }}
+
+                    ]
+                }
+            ]
+        };
+
+        $("#chartContainer").CanvasJSChart(options);
+
+    });
+</script>
+
+<div id="chartContainer"  class="container"></div>
 
 </body>
 </html>
