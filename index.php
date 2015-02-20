@@ -5,9 +5,9 @@
  * Date: 2015-02-17
  */
 
-    require_once('config.php');
-    require('./classes/Counter.php');
-    require('./vendor/autoload.php');
+require_once('config.php');
+require('./classes/Counter.php');
+require('./vendor/autoload.php');
 
 use PCAcademyHR\Counter;
 
@@ -18,7 +18,6 @@ use PCAcademyHR\Counter;
  */
 $counter = Counter::getInstance($config);
 unset($config);
-
 
 
 /*
@@ -66,12 +65,12 @@ echo $twig->render('zadanie_1.twig', array(
  *  Task NR 2 !!
  *
  */
-    $cut_between = array('2014-01-31', '2014-03-02');
-    $result_to_second_task = $counter->getAverageScores($result_to_first_task, $cut_between);
+$cut_between = array('2014-01-31', '2014-03-02');
+$result_to_second_task = $counter->getAverageScores($result_to_first_task, $cut_between);
 
 
 echo $twig->render('zadanie_2.twig', array(
-    'PA' => join(' < - > ',$cut_between),
+    'PA' => join(' < - > ', $cut_between),
     'TABA' => print_r($result_to_second_task, true)
 
 ));
@@ -83,14 +82,13 @@ echo $twig->render('zadanie_2.twig', array(
  */
 $result_to_third_task = "";
 
-    foreach ($result_to_second_task as $DATA => $VAL )
-    {
-        $dd = explode("-",$DATA);
-         $result_to_third_task .= "\n{ x: new Date(".$dd[0].", ".(round($dd[1])-1).", ".round($dd[2])."), y: $VAL },\n";
-    }
+foreach ($result_to_second_task as $DATA => $VAL) {
+    $dd = explode("-", $DATA);
+    $result_to_third_task .= "\n{ x: new Date(" . $dd[0] . ", " . (round($dd[1]) - 1) . ", " . round($dd[2]) . "), y: $VAL },\n";
+}
 
 echo $twig->render('fotter.twig', array(
-        'PA' => join("\tDo\t",$cut_between),
-        'DATA_POINTS' => $result_to_third_task
+    'PA' => join("\tDo\t", $cut_between),
+    'DATA_POINTS' => $result_to_third_task
 
 ));

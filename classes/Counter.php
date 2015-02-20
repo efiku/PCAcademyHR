@@ -2,10 +2,10 @@
 
 namespace PCAcademyHR;
 
+use DateInterval;
 use DateTime;
 use PDO;
 use PDOException;
-use DateInterval;
 
 /**
  * Class Counter
@@ -33,29 +33,25 @@ class Counter
      *
      * @param $ConfigArray
      */
-    public  function  __construct(&$ConfigArray)
+    public function  __construct(&$ConfigArray)
     {
 
         $dsn =
-            'mysql:host='. $ConfigArray['HOST'] .
-            ';dbname='. $ConfigArray['DBNAME'] .
-            ';port='. $ConfigArray['PORT']
-            ;
+            'mysql:host=' . $ConfigArray['HOST'] .
+            ';dbname=' . $ConfigArray['DBNAME'] .
+            ';port=' . $ConfigArray['PORT'];
 
         $user = $ConfigArray['USER'];
         $password = $ConfigArray['PASS'];
 
 
-        try{
-            $this->DBH =  new PDO($dsn, $user, $password);
-        }
-        catch(PDOException $e)
-        {
-            die("Something goes wrong while connecting to database.\n". $e->getMessage());
+        try {
+            $this->DBH = new PDO($dsn, $user, $password);
+        } catch (PDOException $e) {
+            die("Something goes wrong while connecting to database.\n" . $e->getMessage());
         }
 
     }
-
 
 
     /**
@@ -66,7 +62,7 @@ class Counter
      */
     public static function getInstance(&$CONFIG)
     {
-        if (!isset(self::$instance)){
+        if (!isset(self::$instance)) {
             self::$instance = new Counter($CONFIG);
         }
         return self::$instance;
@@ -84,12 +80,11 @@ class Counter
      */
     public function getDataBetween($start, $end)
     {
-        $sql    = "SELECT `DATE`, `READ`  FROM ELECTRICITY_METER_READS WHERE ( `DATE` BETWEEN '$start' AND '$end')";
-        $sql2   = "SELECT `DATE`, `READ`  FROM ELECTRICITY_METER_READS WHERE ( `DATE` = '$start' )";
+        $sql = "SELECT `DATE`, `READ`  FROM ELECTRICITY_METER_READS WHERE ( `DATE` BETWEEN '$start' AND '$end')";
+        $sql2 = "SELECT `DATE`, `READ`  FROM ELECTRICITY_METER_READS WHERE ( `DATE` = '$start' )";
 
         // if sql query is ok
-        if($db =  $this->DBH->query($sql2))
-        {
+        if ($db = $this->DBH->query($sql2)) {
             // if searched DATA not exists
             if ($db->fetchColumn() == 0) {
 
@@ -97,16 +92,13 @@ class Counter
                 $tab_b = $this->fetchDbData($sql);
 
                 // return range
-                return array_merge($tab_a,$tab_b);
-            }
-            else{
+                return array_merge($tab_a, $tab_b);
+            } else {
                 // return range
                 return $this->fetchDbData($sql);
             }
         }
         return false;
-
-
 
 
     }
@@ -131,7 +123,7 @@ class Counter
         $fetchedData = $this->fetchDbData($sql);
 
         $keys = count($fetchedData);
-        return ($keys > 0 ? $fetchedData : array() );
+        return ($keys > 0 ? $fetchedData : array());
     }
 
 
@@ -160,8 +152,8 @@ class Counter
     }
 
 
-
-    public function array_truncate(array $array, $left, $right) {
+    public function array_truncate(array $array, $left, $right)
+    {
         $array = array_slice($array, $left, count($array) - $left);
         $array = array_slice($array, 0, count($array) - $right);
         return $array;
@@ -194,7 +186,7 @@ class Counter
         */
         $result_array = array();
 
-        if( !is_array($DATA))  return $result_array;
+        if (!is_array($DATA)) return $result_array;
 
         /*
          * In this variable is stored 1st parameter
@@ -224,31 +216,28 @@ class Counter
         sort($array_of_keys);
 
 
-
         /*
          *
          *  It's time for main loop!
          *  Whoaah!
          */
-        for ($i = 0; $i < $number_of_all_elements - 1; $i++)
-        {
-            $data_between_start     = new DateTime(  $array_of_keys[ $i ]  );
-            $data_between_end       = new DateTime(  $array_of_keys[ ($i + 1) ]  );
+        for ($i = 0; $i < $number_of_all_elements - 1; $i++) {
+            $data_between_start = new DateTime($array_of_keys[$i]);
+            $data_between_end = new DateTime($array_of_keys[($i + 1)]);
             $temp_day = $data_between_start;
 
             // Troubles with Feb 29 or 28 ? NO MORE!
             $n_days_from_range = $data_between_start->diff($data_between_end)->days;
 
             // e.g 200  - 100 = 100.00
-            $change_counter = $array_from_first_parameter[ $array_of_keys[ ($i + 1) ] ] - $array_from_first_parameter[$array_of_keys[$i]];
+            $change_counter = $array_from_first_parameter[$array_of_keys[($i + 1)]] - $array_from_first_parameter[$array_of_keys[$i]];
 
             // Average energy from range 100 / x days
-            $average_energy_f_range = ( $change_counter  / $n_days_from_range);
+            $average_energy_f_range = ($change_counter / $n_days_from_range);
 
 
             // loop for fill missing data between $data_between_start and $data_between_end
-            for ($k = 0; $k <= $n_days_from_range; $k++)
-            {
+            for ($k = 0; $k <= $n_days_from_range; $k++) {
                 // fill $result_array with  received data
                 // clever line of code!
                 $result_array[$temp_day->format("Y-m-d")] = round($average_energy_f_range, 2);
@@ -263,31 +252,26 @@ class Counter
          * Good time to check if data range in array $result_array
          * and work with it
          */
-            $array_of_keys = array_keys($result_array);
-            $number_of_all_elements = count($array_of_keys);
-            $data_between_start = new DateTime($cut_between_date[0]);
-            $data_between_end  =   new DateTime($cut_between_date[1]);
+        $array_of_keys = array_keys($result_array);
+        $number_of_all_elements = count($array_of_keys);
+        $data_between_start = new DateTime($cut_between_date[0]);
+        $data_between_end = new DateTime($cut_between_date[1]);
 
-        for ($loop = 0; $loop < $number_of_all_elements; $loop++)
-        {
+        for ($loop = 0; $loop < $number_of_all_elements; $loop++) {
 
             $current_data = new DateTime($array_of_keys[$loop]);
 
-            if( $current_data >= $data_between_start &&  $current_data <= $data_between_end )
-            {
-                $new_result_array[$array_of_keys[$loop]] =  $result_array[ $array_of_keys[$loop]];
+            if ($current_data >= $data_between_start && $current_data <= $data_between_end) {
+                $new_result_array[$array_of_keys[$loop]] = $result_array[$array_of_keys[$loop]];
             }
-
-
 
 
         }
 
-            $result_array = $new_result_array;
+        $result_array = $new_result_array;
 
         return $result_array;
     }
 
 
-
-} 
+}

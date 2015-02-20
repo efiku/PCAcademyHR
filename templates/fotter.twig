@@ -1,45 +1,82 @@
+<div role="tabpanel" class="tab-pane" id="zadanie3">
+
+    <div id="chartContainer"></div>
+
 </div>
 
-<script type="text/javascript">
+<div role="tabpanel" class="tab-pane" id="zadanie4">
+    <br>
+    <br>
+    <br>
+
+    <h1 class="text-center">Zapraszam do kodu :)</h1>
+</div>
+
+
+</div>
+<br>
+<br>
+<br>
+
+</div>
+
+
+<div class="container">
+    &copy; 2015 Krzysztof Pazdur
+</div>
+
+<script>
     $(function () {
-        //Better to construct options first and then pass it as a parameter
-        var options = {
-            title: {
-                text: "WYKRES ŚREDNIEGO DZIENNEGO ZUŻYCIA PRĄDU W DANYM PRZEDZIALE "
-            },
-            axisX: {
-                title:"Od: {{ PA }}"
-            },
-            axisY:{
-                title:"Średni dzienny pobór mocy",
-                includeZero: false,
-                interval: 0.5,
+        $('#myTab a:first').tab('show')
+    });
 
-                interlacedColor: "#F5F5F5",
-                gridColor: "#D7D7D7",
-                tickColor: "#D7D7D7",
-            },
-            animationEnabled: true,
+    $(document).ready(function () {
 
-            data: [
-                {
-                    type: "line",
+        $(function () {
+            //Better to construct options first and then pass it as a parameter
+            var options = {
+                title: {
+                    text: "WYKRES ŚREDNIEGO DZIENNEGO ZUŻYCIA PRĄDU W DANYM PRZEDZIALE "
+                },
+                axisX: {
+                    title: "Od: {{ PA }}"
+                },
+                zoomEnabled: false,
+                width: 1000,
+                height: 500,
+                axisY: {
+                    title: "Średni dzienny pobór mocy",
+                    includeZero: false,
+                    interval: 0.5,
 
-                    dataPoints: [
+                    interlacedColor: "#F5F5F5",
+                    gridColor: "#D7D7D7",
+                    tickColor: "#D7D7D7"
+                },
+                animationEnabled: true,
 
-                        {{ DATA_POINTS }}
+                data: [
+                    {
+                        type: "line",
 
-                    ]
-                }
-            ]
-        };
+                        dataPoints: [
 
-        $("#chartContainer").CanvasJSChart(options);
+                            {{ DATA_POINTS }}
+
+                        ]
+                    }
+                ]
+            };
+
+            $("#chartContainer").CanvasJSChart(options);
+
+        });
+
 
     });
-</script>
 
-<div id="chartContainer"  class="container"></div>
+
+</script>
 
 </body>
 </html>
