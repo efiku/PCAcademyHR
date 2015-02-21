@@ -152,13 +152,6 @@ class Counter
     }
 
 
-    public function array_truncate(array $array, $left, $right)
-    {
-        $array = array_slice($array, $left, count($array) - $left);
-        $array = array_slice($array, 0, count($array) - $right);
-        return $array;
-    }
-
     /**
      * AVERAGE ENERGY CONSUMPTION
      *
