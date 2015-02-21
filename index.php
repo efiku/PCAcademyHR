@@ -28,18 +28,6 @@ unset($config);
 $loader = new Twig_Loader_Filesystem('./templates/');
 $twig = new Twig_Environment($loader);
 
-
-/*
- *
- *  Task N 1 !
- *  :D
- */
-$data_array = Array('2014-01-30', '2014-03-22');
-
-
-$result_to_first_task = $counter->getDataBetween($data_array[0], $data_array[1]);
-
-
 /*
  *
  * Header ->
@@ -55,15 +43,23 @@ echo $twig->render('header.twig');
  *
  *
  */
+$data_array = Array('2014-01-30', '2014-03-22');
+
+
+$result_to_first_task = $counter->getDataBetween($data_array[0], $data_array[1]);
+
+
 echo $twig->render('zadanie_1.twig', array(
     'PA' => join(' do ', $data_array),
     'TABA' => print_r($result_to_first_task, true),
 ));
 
+
 /*
  *
  *  Task NR 2 !!
  *
+ *  2014 -> 02 -> 28 or  29?  No more!
  */
 $cut_between = array('2014-01-31', '2014-03-02');
 $result_to_second_task = $counter->getAverageScores($result_to_first_task, $cut_between);
@@ -78,7 +74,7 @@ echo $twig->render('zadanie_2.twig', array(
 /*
  *
  *  TASK NR 3 !!
- *
+ *  Im newbie in twig..
  */
 $result_to_third_task = "";
 

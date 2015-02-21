@@ -8,9 +8,16 @@ use PDO;
 use PDOException;
 
 /**
- * Class Counter
- * @package efikCounter
- *
+ * Class Counter is designed just for this task
+ * is based on the Singleton pattern.
+ * Use: $yourVariable = Counter::getInstance($config);
+ * I prefer coding with classes.
+ * It helps me to organize my code and distribute
+ * tasks on several methods.
+ * ...................................................
+ * @package    PCAcademyHR
+ * @author     Krzysztof Pazdur <pazdurk@gmail.com>
+ * @version    0.1
  */
 class Counter
 {
@@ -166,15 +173,27 @@ class Counter
      * print_r($counter->getAverageScores($DATA,$cut));
      *
      * </pre>
-     * @param array $DATA
-     * @param array $cut_between_date
-     * @return array
+     * @param array $DATA             - Array from task 1
+     * @param array $CUT_BETWEEN_DATE - Range to cut.
+     *
+     * @return array - cut range
      */
-    public function getAverageScores(&$DATA = array(), &$cut_between_date = array())
+    public function getAverageScores(&$DATA = array(), &$CUT_BETWEEN_DATE = array())
     {
         /*
          *  This variable is returned when loop "for" is done.
-         *  Yes, function return empty array if range from $cut_between_date is not exists
+         *  Yes, function return empty array if range $CUT_BETWEEN_DATE range is higher or lover than 'range' in $DATA,
+         *  or if $DATA isn't array !
+         *
+         *
+         *  e.g.
+         *  in $DATA you have keys  with range  < 2014-01-01 -  2014-03-14 >
+         *  and your $CUT_BETWEEN_DATE is  < 2014-03-01 to 2014-04-10 >
+         *  my clever method generate and return only data between < 2014-03-03 ,to 2014-03-14 >
+         *
+         * but if $CUT_BETWEEN_DATE  is < 2014-04-01 - 2014-04-30 > you get nothing.
+         * my method isn't Luke Skywalker, can't see the future.
+         *
          *  in array from 1st parameter or $DATA isn't array! :)
         */
         $result_array = array();
@@ -210,13 +229,16 @@ class Counter
 
 
         /*
-         *
          *  It's time for main loop!
          *  Whoaah!
          */
         for ($i = 0; $i < $number_of_all_elements - 1; $i++) {
+
+            // Take data
             $data_between_start = new DateTime($array_of_keys[$i]);
             $data_between_end = new DateTime($array_of_keys[($i + 1)]);
+
+            // here is clever variable!
             $temp_day = $data_between_start;
 
             // Troubles with Feb 29 or 28 ? NO MORE!
@@ -244,11 +266,15 @@ class Counter
         /*
          * Good time to check if data range in array $result_array
          * and work with it
+         *
+         * I am eco, re-usable variables
          */
+        $new_result_array = array();
+
         $array_of_keys = array_keys($result_array);
         $number_of_all_elements = count($array_of_keys);
-        $data_between_start = new DateTime($cut_between_date[0]);
-        $data_between_end = new DateTime($cut_between_date[1]);
+        $data_between_start = new DateTime($CUT_BETWEEN_DATE[0]);
+        $data_between_end = new DateTime($CUT_BETWEEN_DATE[1]);
 
         for ($loop = 0; $loop < $number_of_all_elements; $loop++) {
 
@@ -259,7 +285,7 @@ class Counter
             }
 
 
-        }
+        } // endfor
 
         $result_array = $new_result_array;
 
