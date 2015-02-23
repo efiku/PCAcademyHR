@@ -3,7 +3,6 @@
  * Created by PhpStorm.
  * User: Krzysztof
  * Date: 2015-02-17
- * Time: 15:17
  */
 
        $config = Array(

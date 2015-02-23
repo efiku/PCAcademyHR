@@ -9,6 +9,7 @@
             "email": "pazdurk@gmail.com"
         }
     ],
+  "version": "0.1",
     "require": {
         "twig/twig": "1.6.5"
     }
