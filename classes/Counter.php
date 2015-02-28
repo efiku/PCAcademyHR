@@ -255,7 +255,8 @@ class Counter
             for ($k = 0; $k <= $n_days_from_range; $k++) {
                 // fill $result_array with  received data
                 // clever line of code!
-                $result_array[$temp_day->format("Y-m-d")] = round($average_energy_f_range, 2);
+                $result_array[$temp_day->format("Y-m-d")] = number_format( round($average_energy_f_range, 2) ,2, '.', '');
+                
                 $temp_day->add(new DateInterval('P1D'));
 
 

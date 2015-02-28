@@ -43,7 +43,7 @@ echo $twig->render('header.twig');
  *
  *
  */
-$data_array = Array('2014-01-30', '2014-03-22');
+$data_array = Array('2014-01-01', '2014-3-31');
 
 
 $result_to_first_task = $counter->getDataBetween($data_array[0], $data_array[1]);
@@ -61,7 +61,7 @@ echo $twig->render('zadanie_1.twig', array(
  *
  *  2014 -> 02 -> 28 or  29?  No more!
  */
-$cut_between = array('2014-01-31', '2014-03-02');
+$cut_between = array('2014-01-28', '2014-03-10');
 $result_to_second_task = $counter->getAverageScores($result_to_first_task, $cut_between);
 
 

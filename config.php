@@ -8,9 +8,9 @@
        $config = Array(
 
            'ENGINE' => 'mysql',
-           'HOST'   => 'localhost',
-           'USER'   => 'root',
-           'PASS'   => 'scb766',
+           'HOST'   => '127.0.0.1',
+           'USER'   => 'efik',
+           'PASS'   => '',
            'DBNAME' => 'counters',
            'PORT'   => '3306',
             );
