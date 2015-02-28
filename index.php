@@ -43,7 +43,7 @@ echo $twig->render('header.twig');
  *
  *
  */
-$data_array = Array('2014-01-01', '2014-3-31');
+$data_array = Array('2014-01-01', '2014-03-31');
 
 
 $result_to_first_task = $counter->getDataBetween($data_array[0], $data_array[1]);
