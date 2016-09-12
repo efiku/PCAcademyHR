@@ -31,3 +31,10 @@ ____
 4. **You should see nice page**  
 
 :-)
+
+### Based on similar task: 
+
+* https://gist.github.com/efiku/985d617630dbc9006c7e
+* https://gist.github.com/efiku/77c57bad5576a93335c5
+
+
